@@ -185,7 +185,48 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(FBelugaNameTest, "Beluga.Name", EAutomationTest
 
 bool FBelugaNameTest::RunTest(const FString& Parameters)
 {
-	FName a;
+	//Compare()
+	//FName.Compare(FName other) : FName과 인자로 받은 other에 대해서 비교하여 compareIndex의 값이 같은 경우 FName과 other의 number의 차이를 return한다.
+	//
+	{
+		FName MyName("Jang", 1);
+
+		FName Friend1("Jang", 1);
+		FName Friend2("Jan", 1);
+		FName Friend3("JangK", 1);
+		FName Friend4("Jang", 2);
+		FName Friend5("Jan", 5);
+		FName Friend6("JangK", 34);
+
+		FName Friend7("Jang", 8);
+		FName Friend8("Jang", -5);
+
+		int32 ZeroOrNot = MyName.Compare(Friend1);
+		TestEqual(TEXT("CHECK YOUR NAME"), MyName.Compare(Friend1), 0);
+
+		ZeroOrNot = MyName.Compare(Friend2);
+		TestEqual(TEXT("CHECK YOUR NAME"), MyName.Compare(Friend2), 1);
+
+		ZeroOrNot = MyName.Compare(Friend3);
+		TestEqual(TEXT("CHECK YOUR NAME"), MyName.Compare(Friend3), -1);
+
+		ZeroOrNot = MyName.Compare(Friend4); //Num의 값이 바뀌어도 return 값이 변함.
+		TestEqual(TEXT("CHECK YOUR NAME"), MyName.Compare(Friend4), -1);
+
+		ZeroOrNot = MyName.Compare(Friend5);
+		TestEqual(TEXT("CHECK YOUR NAME"), MyName.Compare(Friend5), 1);
+
+		ZeroOrNot = MyName.Compare(Friend6);
+		TestEqual(TEXT("CHECK YOUR NAME"), MyName.Compare(Friend6), -1);
+
+		//FName의 CompareIndex값은 같지만 DesplayIndex의 값이 다른 경우 추가 확인
+		ZeroOrNot = MyName.Compare(Friend7);
+		TestEqual(TEXT("CHECK YOUR NAME"), MyName.Compare(Friend6), -1);
+
+		ZeroOrNot = MyName.Compare(Friend8);
+		TestEqual(TEXT("CHECK YOUR NAME"), MyName.Compare(Friend6), -1);
+	
+	}
 
 	return true;
 }
