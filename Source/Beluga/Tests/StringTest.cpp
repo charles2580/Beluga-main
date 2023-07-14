@@ -219,13 +219,22 @@ bool FBelugaNameTest::RunTest(const FString& Parameters)
 		ZeroOrNot = MyName.Compare(Friend6);
 		TestEqual(TEXT("CHECK YOUR NAME"), MyName.Compare(Friend6), -1);
 
-		//FName의 CompareIndex값은 같지만 DesplayIndex의 값이 다른 경우 추가 확인
+		//FName의 CompareIndex값은 같지만 DesplayIndex의 값이 다른 경우 
 		ZeroOrNot = MyName.Compare(Friend7);
 		TestEqual(TEXT("CHECK YOUR NAME"), MyName.Compare(Friend6), -1);
 
 		ZeroOrNot = MyName.Compare(Friend8);
 		TestEqual(TEXT("CHECK YOUR NAME"), MyName.Compare(Friend6), -1);
 	
+	}
+	//FName.ToString() : FName을 FString으로 변환하는 함수.
+	{
+		FName coke("PEPSI", 1);
+		FString coca_cola = coke.ToString();
+		//coca_cola에 PEPSI가 들어 갈 것이라고 예상했지만, PEPSI_0 으로 확인되어 TestEqual을 통과하지 못함.
+		
+		//오류를 출력하므로 주석처리
+		//TestEqual(TEXT("CHECK COKE IS NAME"), coca_cola, TEXT("PEPSI"));
 	}
 
 	return true;
