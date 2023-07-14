@@ -17,6 +17,8 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(FBelugaMapTest, "Beluga.Map", \
 	bool FBelugaMapTest::RunTest(const FString& Parameters)
 {
 	TMap<FName, FString> map = {{TEXT("A"), TEXT("Apple")}, { TEXT("B"), TEXT("Banana") }, { TEXT("C"), TEXT("Cherry") }};
+	
+	
 
 	return true;
 }
@@ -26,5 +28,7 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(FBelugaSetTest, "Beluga.Set", \
 
 	bool FBelugaSetTest::RunTest(const FString& Parameters)
 {
+	
+
 	return true;
 }

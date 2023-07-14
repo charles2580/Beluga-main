@@ -63,17 +63,20 @@ bool FBelugaStringTest::RunTest(const FString& Parameters)
 	}
 
 	//TChar*
+	//TCHAR* ad를 사용하여 fsChar의 주소에 접근
 	{
 		FString fsChar(TEXT("ABCD"));
 		const TCHAR* ad = *fsChar;
-		TestEqual(TEXT("Check FString and TCHAR* addresses"), ad, *fsChar);
+		TestEqual(TEXT("Check FString and TCHAR* addresses"), ad, *fsChar);	
 		TestEqual(TEXT("Check FString and TCHAR* values"), fsChar, FString(ad));
-		fsChar.Reset();
+		fsChar = TEXT("EFGH");
 		TestEqual(TEXT("Check FString and TCHAR* values"), fsChar, FString(ad));
 
 	}
 
 	//Shrink()
+	//maxArray: 실제로 FString이 차지하고 있는 메모리의 크기, maxNum: FString의 마지막 문자의 인덱스값,즉 \0의 인덱스
+	//FString.Shrink() : maxArray가 maxNum과 같지 않을 경우 maxArray를 maxNum으로 바꿈, 메모리 크기를 재설정 하는 함수
 	{
 		FString MyString = TEXT("ABCD EFG HI JK LMNOP");
 		int Size = MyString.GetAllocatedSize();
@@ -85,12 +88,14 @@ bool FBelugaStringTest::RunTest(const FString& Parameters)
 
 	FString MrRue(TEXT("GOOD"));
 	//길이 구하기
+	//Len() : FString의 문자열 길이를 return, 문자가 하나라도 있다면 data.NUM()-1을 return, 문자가 없다면 0을 return
 	{
 		int a = MrRue.Len();
 		TestEqual(TEXT("Check again"), MrRue.Len(), 4);
 	}
 
-	//replace()
+	//Replace()
+	//FString.Replace(From, To) : FString에서 From에 해당하는 문자를 찾아서 To로 교체
 	{
 		MrRue = MrRue.Replace(TEXT("G"), TEXT("F"));
 		FString food(TEXT("FOOD"));
@@ -98,13 +103,17 @@ bool FBelugaStringTest::RunTest(const FString& Parameters)
 	}
 
 	//Insert()
+	//
 	{
-		MrRue.InsertAt(5, TEXT(" FIGHTER"));
+		MrRue.InsertAt(4, TEXT(" FIGHTER"));
 		FString SeonWoo(TEXT("FOOD FIGHTER"));
 		TestEqual(TEXT("CHECK MrRue ate all food in zochiwon"), MrRue, SeonWoo);
 	}
 
 	//Split()
+	//Split(const FString& InS, FString* LeftS, FString* RightS) : 
+	//FString에서 InS를 찾아서, InS를 기준으로 왼쪽의 문자열을 복사하여 LeftS에 저장하고, 오른쪽의 문자열을 복사하여 RightS에 저장한다.
+	//내부적으로는 InS의 인덱스 값을 FString의 Find()함수를 이용하여 찾고 ex) leftpos = FString.Find(Ins), LeftS에 FString.Left()함수를 사용하여 0번인덱스 부터 leftpos 인덱스 까지를 복사
 	{
 		FString Mr("");
 		FString Rue("");
@@ -114,25 +123,69 @@ bool FBelugaStringTest::RunTest(const FString& Parameters)
 	}
 
 	//RemoveAt()
+	//RemoveAt(index , count, bAllowShrinking)은 index에 해당하는 FString의 문자부터 count만큼 삭제하고 bAllowShrinking값에 따라서 메모리를 재설정 한다.
 	{
 		FString Bong(TEXT("I REALLY WANT TO SLEEP NOW"));
-		Bong.RemoveAt(22, 3, true);
+		Bong.RemoveAt(23, 3, true);
 	}
 
 	//Clear()
+	//Len()을 사용하여 FString의 길이를 구하고, RemoveAt을 활용하여 0번 인덱스부터 마지막 인덱스까지를 지우고 메모리를 조정한다.
 	{
-		while (MrRue.IsEmpty())
-		{
-			MrRue.RemoveAt(0, 1, true);
-		}
+		MrRue.RemoveAt(0, MrRue.Len(), true);
+	}
+
+	//IsEmpty()
+	//FString이 빈 문자열인지를 확인하고, empty면 true를 그 외에는 false를 return
+	{
+		TestEqual(TEXT("CHECK IS MrRue HUNGRY"), MrRue.IsEmpty(), true);
+	}
+
+	//Find()
+	//FString.Find() : FString내에서 string을 찾아 string의 첫번째 문자에 해당하는 index값을 반환, FString의 처음부터 끝까지를 탐색하며, 무시할 case를 설정할 수 있다.
+	{
+		FString Coffee(TEXT("Do you need caffeine"));
+		int32 a = Coffee.Find("caffeine");
+		TestEqual(TEXT("CHECK IS THERE A COFFEE"),Coffee.Find(TEXT("caffeine")),12);
+	}
+
+	//Append()
+	//FString.Append(const wchar_t* Str) : 현재 FString의 맨 뒤에 인자로 넘겨 받은 Str을 추가하여 합쳐진 Fstring의 레퍼런스를 return 
+	{
+		MrRue.Append(TEXT("I AM HUNGRY"));
+		MrRue.Append(TEXT(" PLEASE GIVE ME HAMBURGER"));
+	}
+
+	FString BadBoy;
+
+	//Left()
+	//FString.Left(int32 count) : 왼쪽에서부터, 즉 0번 인덱스 부터 count-1인덱스까지를 return
+
+	{
+		
+		BadBoy = MrRue.Left(5); 
+	}
+
+	//Mid()
+	//FString.Mid(int32 count) : count 번째 인덱스부터 마지막 인덱스까지를 return
+	{
+		BadBoy = MrRue.Mid(10); 
+	}
+
+	//Right()
+	//FString.Right(int32 count) : 오른쪽에서부터, 즉 마지막 인덱스 부터 count 만큼 왼쪽에 있는 문자를 return. 
+	{
+		BadBoy = MrRue.Right(5); 
 	}
 
 	return true;
 }
 
-//IMPLEMENT_SIMPLE_AUTOMATION_TEST(FBelugaNameTest, "Beluga.Name", EAutomationTestFlags::ApplicationContextMask | EAutomationTestFlags::EngineFilter)
-//
-//bool FBelugaNameTest::RunTest(const FString& Parameters)
-//{
-//	return true;
-//}
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FBelugaNameTest, "Beluga.Name", EAutomationTestFlags::ApplicationContextMask | EAutomationTestFlags::EngineFilter)
+
+bool FBelugaNameTest::RunTest(const FString& Parameters)
+{
+	FName a;
+
+	return true;
+}
