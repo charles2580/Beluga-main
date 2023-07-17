@@ -8,6 +8,6 @@ public class Beluga : ModuleRules
 
 		PublicIncludePaths.AddRange(new string[] { "Beluga" });
 	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core" });
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine" });
 	}
 }
