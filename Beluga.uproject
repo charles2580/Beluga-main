@@ -1,11 +1,16 @@
 {
 	"FileVersion": 3,
 	"EngineAssociation": "5.1",
+	"Category": "",
+	"Description": "",
 	"Modules": [
 		{
 			"Name": "Beluga",
 			"Type": "Runtime",
-			"LoadingPhase": "Default"
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"CoreUObject"
+			]
 		}
 	]
 }
