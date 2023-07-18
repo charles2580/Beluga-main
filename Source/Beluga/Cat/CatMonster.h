@@ -11,7 +11,7 @@
 /**
  * 
  */
-UCLASS(Blueprintable, Abstract)
+UCLASS()
 class BELUGA_API UCatMonster : public UCreature
 {
 	GENERATED_BODY()

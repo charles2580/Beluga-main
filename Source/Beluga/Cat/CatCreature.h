@@ -9,7 +9,7 @@
 /**
  * 
  */
-UCLASS(Blueprintable, Abstract)
+UCLASS(Blueprintable, BlueprintType)
 class UCreature : public UObject
 {
 	GENERATED_BODY()
@@ -19,8 +19,8 @@ public:
 	/** Please add a function description */
 	UFUNCTION(BlueprintCallable)
 		void HongikUniv(int32 In, int32& Result);
-
-	UFUNCTION(BlueprintCallable)
+	
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
 		void Init();
 public:
 

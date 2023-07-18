@@ -13,7 +13,7 @@ void UCreature::HongikUniv(int32 In, int32& Result)
 
 }
 
-void UCreature::Init()
+void UCreature::Init_Implementation()
 {
 	MaxHP = CurrentHP;
 	FString CreatureName = Name.ToString();
